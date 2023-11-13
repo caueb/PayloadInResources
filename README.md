@@ -22,7 +22,7 @@ rc.exe /r /fo .\metadata.res .\metadata.rc
 ```
 4. Modify the `Caue.cpp` line 52 with the XOR key you used and compile with clang++:
 ```powershell
-clang++.exe -O2 -Ob2 -Os -fno-stack-protector -g -Xlinker -pdb:none -Xlinker -subsystem:console -o Caue.exe Caue.cpp metadata.res -luser32 -lkernel32 -fno-unroll-loops -fno-exceptions -fno-rtti
+clang++.exe -O2 -Ob2 -Os -fno-stack-protector -g -Xlinker -pdb:none -Xlinker -subsystem:windows -o Caue.exe Caue.cpp metadata.res -luser32 -lkernel32 -fno-unroll-loops -fno-exceptions -fno-rtti
 ```
 
 # Credits
